@@ -40,13 +40,18 @@ export default function SignUp() {
   const [room, setRoom] = React.useState('');  
   const [dateIngres, setDateIngres] = React.useState('');
   const [dateOut, setDateOut] = React.useState('');
+  const [expirationDate, setExpirationDate] = React.useState('');
 
   const handleChangeDI = (dateIngress) => {
     setDateIngres(dateIngress);
   };
 
-  const handleChangeDO = (dateIngress) => {
-    setDateOut(dateIngress);
+  const handleChangeDO = (dateOut) => {
+    setDateOut(dateOut);
+  };
+
+  const handleChangeCC = (expirationDate) => {
+    setExpirationDate(expirationDate);
   };
 
 
@@ -134,61 +139,41 @@ export default function SignUp() {
                   </Stack>
                 </LocalizationProvider>
               </Grid>
-
               
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="neighborhood"
-                  label="Neighborhood"
-                  name="neighborhood"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="city"
-                  label="City"
-                  name="city"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="state"
-                  label="State"
-                  name="state"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="country"
-                  label="Country"
-                  name="country"
-                />
-              </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth
-                  id="cellphone"
-                  label="Cellphone"
-                  name="cellphone"
+                  id="cardNumbers"
+                  label="Credit or debit card"
+                  name="cardNumbers"
                 />
+              </Grid>            
+
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack>
+                    <DesktopDatePicker
+                      label="Expiration date"
+                      inputFormat="MM/dd"
+                      value={expirationDate}
+                      onChange={handleChangeCC}
+                      renderInput={(params) => <TextField {...params} />}
+                    /> 
+                  </Stack>
+                </LocalizationProvider>
               </Grid>
 
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="cvv"
+                  label="CVV"
+                  name="cvv"
                 />
-              </Grid> */}
+              </Grid>                          
+
             </Grid>
 
             <Button
@@ -207,6 +192,7 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid> */}
+            
           </Box>
         </Box>
 
