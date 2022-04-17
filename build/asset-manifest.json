@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.76fed10d.css",
+    "main.js": "/static/js/main.bdda256f.js",
+    "static/media/2.jpg": "/static/media/2.80834b52def0ce1b194c.jpg",
+    "static/media/1.jpg": "/static/media/1.5e024567ac74767e4190.jpg",
+    "static/media/4.jpg": "/static/media/4.b8aa6bdcf3a77d56b74e.jpg",
+    "static/media/problemas-hotel.jpg": "/static/media/problemas-hotel.b684b5e916d95a480a07.jpg",
+    "index.html": "/index.html",
+    "main.76fed10d.css.map": "/static/css/main.76fed10d.css.map",
+    "main.bdda256f.js.map": "/static/js/main.bdda256f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76fed10d.css",
+    "static/js/main.bdda256f.js"
+  ]
+}
