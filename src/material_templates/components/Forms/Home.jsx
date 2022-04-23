@@ -9,10 +9,13 @@ export default function
 Home
 () {
   return (
-    <div>
-        <img src={foto1} />
-        <img src={foto2} />
-        
-    </div>    
+    <>   
+      <div style={{width:"80vw"}}>
+        <img style={{objectFit:'cover'}} src={foto1} />           
+      </div>
+      <div style={{width:"80vw"}}>    
+        <img style={{objectFit:'cover'}} src={foto2} />        
+      </div>
+    </>
   )
 }

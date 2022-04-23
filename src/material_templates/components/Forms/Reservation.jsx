@@ -42,8 +42,14 @@ export default function SignUp() {
   const [dateOut, setDateOut] = React.useState('');
   const [expirationDate, setExpirationDate] = React.useState('');
 
+  const handleChangeRoom = (room) => {
+    setRoom(room);
+    console.log(room);
+  }
+
   const handleChangeDI = (dateIngress) => {
     setDateIngres(dateIngress);
+    console.log(dateIngres);
   };
 
   const handleChangeDO = (dateOut) => {
@@ -97,13 +103,10 @@ export default function SignUp() {
                   <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
-                    value={room}
                     label="Room *"
-                    onChange={"handleChange"}
+                    onChange={handleChangeRoom}                                       
                   >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
+                    <MenuItem value={""}>None</MenuItem> 
                     <MenuItem value={"single"}>Single</MenuItem>
                     <MenuItem value={"premium"}>Premium</MenuItem>
                     <MenuItem value={"presidential"}>Presidential</MenuItem>
@@ -121,6 +124,7 @@ export default function SignUp() {
                       value={dateIngres}
                       onChange={handleChangeDI}
                       renderInput={(params) => <TextField {...params} />}
+                      
                     /> 
                   </Stack>
                 </LocalizationProvider>
@@ -146,6 +150,7 @@ export default function SignUp() {
                   fullWidth
                   id="cardNumbers"
                   label="Credit or debit card"
+                  placeholder='XXXX XXXX XXXX XXXX'
                   name="cardNumbers"
                 />
               </Grid>            
@@ -155,7 +160,7 @@ export default function SignUp() {
                   <Stack>
                     <DesktopDatePicker
                       label="Expiration date"
-                      inputFormat="MM/dd"
+                      inputFormat="MM/dd/yyyy"
                       value={expirationDate}
                       onChange={handleChangeCC}
                       renderInput={(params) => <TextField {...params} />}

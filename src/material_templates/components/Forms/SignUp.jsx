@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function Copyright(props) {
+/* function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -25,18 +25,48 @@ function Copyright(props) {
     </Typography>
   );
 }
+ */
+
+import { useFormik } from 'formik';
+import *as Yup from 'yup';
+
+const ValidationSchema = Yup.object().shape({
+  email:                        Yup.string().email().required("Field required"),
+  password:                     Yup.string().required("Field required")
+                                    .matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+                                    "Password must contain at least 8 characters, one uppercase, one number and one special case character")
+                                    .min(8,"Minimo 8 carateres")
+                                    .max(16, "Maximo 16 caracteres") ,
+  passwordConfirmation:         Yup.string().required("Field required")
+                                    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+})
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+  /* const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
-  };
+  }; */
+
+  const formik = useFormik({
+    initialValues: {
+      email:"",
+      password:"",
+      passwordConfirmation:""
+    },
+    onSubmit: (values) => {
+      console.log(values);
+      
+
+    },
+    validationSchema : ValidationSchema
+  })
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,86 +86,78 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid> */}
-{/*               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
+          <Box sx={{ mt: 3 }}>
+            <form onSubmit={formik.handleSubmit}>            
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField                 
+                    id="email"
+                    name="email"
+                    label="Email Address"
+                    type="email"
+                    /* autoComplete="email" */
+                    fullWidth
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField                        
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"                  
+                    /* autoComplete="password" */
+                    fullWidth
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    id="passwordConfirmation"
+                    name="passwordConfirmation"                                   
+                    label="Password confirmation"
+                    type="password"                  
+                    /* autoComplete="new-password" */
+                    fullWidth 
+                    value={formik.values.passwordConfirmation}
+                    onChange={formik.handleChange}
+                    error={formik.touched.passwordConfirmation && Boolean(formik.errors.passwordConfirmation)}
+                    helperText={formik.touched.passwordConfirmation && formik.errors.passwordConfirmation}
+                  />
+                </Grid>
+                {/* <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                    label="I want to receive inspiration, marketing promotions and updates via email."
+                  />
+                </Grid> */}
               </Grid>
 
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="password"
-                  label="Password"
-                  name="password"
-                  autoComplete="password"
-                />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="passwordConfirmation"
-                  label="Password confirmation"
-                  type="password"
-                  id="passwordConfirmation"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
-            </Grid>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+            </form>
           </Box>
         </Box>
 
